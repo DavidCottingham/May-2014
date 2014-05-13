@@ -5,23 +5,18 @@ using System.Collections.Generic;
 public class NPCDialog : MonoBehaviour {
 
 	private struct QuestDialog {
-		int questID;
-		int objectiveID;
-		bool checkObjective;
-		bool completed;
-		string dialog;
-		public int QuestID { get {	return this.questID; } }
-		public int ObjectiveID { get { return this.objectiveID; } }
-		public bool CheckObjective { get { return this.checkObjective; } }
-		public bool Completed { get { return this.completed; } }
-		public string Dialog { get { return this.dialog; } }
+		public int QuestID { get; private set; }
+		public int ObjectiveID { get; private set; }
+		public bool CheckObjective { get; private set; }
+		public bool Completed { get; private set; }
+		public string Dialog { get; private set; }
 
 		private QuestDialog(int questID, int objectiveID, bool checkObjective, bool completed, string dialog) {
-			this.questID = questID;
-			this.objectiveID = objectiveID;
-			this.checkObjective = checkObjective;
-			this.completed = completed;
-			this.dialog = dialog;
+			this.QuestID = questID;
+			this.ObjectiveID = objectiveID;
+			this.CheckObjective = checkObjective;
+			this.Completed = completed;
+			this.Dialog = dialog;
 		}
 
 		public QuestDialog(int questID, int objectiveID, bool completed, string dialog) : this(questID, objectiveID, true, completed, dialog) {}
