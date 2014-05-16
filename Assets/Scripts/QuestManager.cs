@@ -5,7 +5,8 @@ using System.IO;
 
 public class QuestManager : MonoBehaviour {
 
-	private List<Quest> quests = new List<Quest>();
+	[SerializeField] private List<Quest> quests = new List<Quest>();
+	public List<Quest> Quests { get { return quests; } }
 	private XmlSerializer serializer = new XmlSerializer(typeof(List<Quest>));
 	//non-running location?
 	private string path = "Assets/quests.xml";
@@ -20,11 +21,6 @@ public class QuestManager : MonoBehaviour {
 
 	void Start() {
 		LoadOrCreate();
-		//AddQuest(new Quest(1, "test", 5, new QuestObjective(0, "what", "ok")));
-		//Save();
-		//Load();
-		//AddQuest(new Quest(12, "test2", 52, new QuestObjective(20, "what2", "ok2")));
-		//Save();
 	}
 
 	public void Save() {
@@ -32,6 +28,7 @@ public class QuestManager : MonoBehaviour {
 		using (FileStream stream = new FileStream(path, FileMode.Create)) {
 			serializer.Serialize(stream, quests);
 		}
+		print("Saving file to " + path);
 	}
 	
 	public void Save(Quest quest) {
@@ -50,13 +47,15 @@ public class QuestManager : MonoBehaviour {
 				using (FileStream stream = new FileStream(path, FileMode.Open)) {
 					quests = serializer.Deserialize(stream) as List<Quest>;
 				}
+				print("Loading file from " + path);
 			} catch(System.Exception exc) {
 				Debug.LogException(exc);
 			}
 		} else {
 			//DEBUG_OUT
-			Debug.LogError("Quests Not Found! Creating empty Quests file");
-			Save();
+			//Debug.LogError("Quests Not Found! Creating empty Quests file");
+			Debug.LogError("Quests Not Found!");
+			//Save();
 		}
 	}
 }

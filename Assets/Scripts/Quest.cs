@@ -1,36 +1,39 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
+[System.Serializable]
 public class Quest {
-
-	[XmlAttribute("ID")]
-	public int ID { get; private set; }
-	public string Name { get; private set; }
-	public List<QuestObjective> Objectives { get; private set; }
-	public int XPReward { get; private set; }
+	//using fields instead of auto-props so can serialize the fields to inspector
+	//empty setter on properties needed for XML serialization
+	[XmlAttribute("ID")] public int id = 0;
+	public string name;
+	public string description;
+	public int xpReward;
 	public bool Completed { get; private set; }
+	public List<QuestObjective> objectives;
 
 	public Quest(int id, string name, List<QuestObjective> objectives, int xpReward) {
-		this.ID = id;
-		this.Name = name;
-		this.Objectives = objectives;
-		this.XPReward = xpReward;
+		this.id = id;
+		this.name = name;
+		this.objectives = objectives;
+		this.xpReward = xpReward;
 	}
 
-	public Quest(int id, string name, int xpReward, params QuestObjective[] objectives) : this(id, name, null, xpReward) {
-		this.Objectives = new List<QuestObjective>();
+	/*public Quest(int id, string name, int xpReward, params QuestObjective[] objectives) : this(id, name, null, xpReward) {
+		this.objectives = new List<QuestObjective>();
 		foreach (QuestObjective qo in objectives) {
-			this.Objectives.Add(qo);
+			this.objectives.Add(qo);
 		}
-	}
+	}*/
 
-	//need default constructor for serialization
-	public Quest() : this(-1, "null", null, 0) {}
+	//need default constructor for XML serialization
+	public Quest() {}
 
 	public bool UpdateObjective(int id) {
-		foreach (QuestObjective qo in Objectives) {
-			if (qo.ID == id) {
+		foreach (QuestObjective qo in objectives) {
+			if (qo.id == id) {
 				qo.IncrementObjective();
 				break;
 			}
@@ -39,7 +42,7 @@ public class Quest {
 	}
 
 	private bool CheckCompleted() {
-		foreach (QuestObjective qo in Objectives) {
+		foreach (QuestObjective qo in objectives) {
 			if (!qo.Completed) {
 				if (Completed) { Completed = false; }
 				return Completed;
@@ -50,8 +53,8 @@ public class Quest {
 	}
 
 	public bool CheckObjective(int id) {
-		foreach (QuestObjective qo in Objectives) {
-			if (qo.ID == id) {
+		foreach (QuestObjective qo in objectives) {
+			if (qo.id == id) {
 				return qo.Completed;
 			}
 		}
