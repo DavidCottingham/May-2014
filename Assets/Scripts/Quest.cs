@@ -6,34 +6,39 @@ using System.Xml.Serialization;
 [System.Serializable]
 public class Quest {
 	//using fields instead of auto-props so can serialize the fields to inspector
-	//empty setter on properties needed for XML serialization
-	[XmlAttribute("ID")] public int id = 0;
-	public string name;
-	public string description;
-	public int xpReward;
+	private static int questCount = 0;
+	[SerializeField] private int id = questCount;
+	[XmlAttribute("ID")] public int ID { get { return id; } }
+	[SerializeField] private string name;
+	public string Name { get { return name; } }
+	[SerializeField] private string description;
+	public string Description { get { return description; } }
+	[SerializeField] private int xpReward;
+	public int XPReward { get { return xpReward; } }
 	public bool Completed { get; private set; }
-	public List<QuestObjective> objectives;
+	[SerializeField] private List<QuestObjective> objectives;
+	public List<QuestObjective> Objectives { get { return objectives; } }
 
-	public Quest(int id, string name, List<QuestObjective> objectives, int xpReward) {
-		this.id = id;
+	public Quest(string name, List<QuestObjective> objectives, int xpReward) {
+		this.id = questCount++;
 		this.name = name;
 		this.objectives = objectives;
 		this.xpReward = xpReward;
 	}
 
-	/*public Quest(int id, string name, int xpReward, params QuestObjective[] objectives) : this(id, name, null, xpReward) {
+	public Quest(string name, int xpReward, params QuestObjective[] objectives) : this(name, null, xpReward) {
 		this.objectives = new List<QuestObjective>();
 		foreach (QuestObjective qo in objectives) {
 			this.objectives.Add(qo);
 		}
-	}*/
+	}
 
 	//need default constructor for XML serialization
-	public Quest() {}
+	public Quest() : this("", null, 0) {}
 
 	public bool UpdateObjective(int id) {
 		foreach (QuestObjective qo in objectives) {
-			if (qo.id == id) {
+			if (qo.ID == id) {
 				qo.IncrementObjective();
 				break;
 			}
@@ -54,7 +59,7 @@ public class Quest {
 
 	public bool CheckObjective(int id) {
 		foreach (QuestObjective qo in objectives) {
-			if (qo.id == id) {
+			if (qo.ID == id) {
 				return qo.Completed;
 			}
 		}

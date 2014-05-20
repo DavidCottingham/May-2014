@@ -11,8 +11,8 @@ public static class QuestList {
 		deleteButtonContent = new GUIContent("-", "delete"),
 		addQuestButtonContent = new GUIContent("+ Quest", "add element"),
 		addObjectiveButtonContent = new GUIContent("+ Objective", "add element"),
-		saveFileButtonContent = new GUIContent("Save To File", "Save quests to file"),
-		loadFileButtonContent = new GUIContent("Refresh/Load File", "Load from file"),
+		//saveFileButtonContent = new GUIContent("Save To File", "Save quests to file"),
+		//loadFileButtonContent = new GUIContent("Refresh/Load File", "Load from file"),
 		idLabel = new GUIContent("ID"),
 		nameLabel = new GUIContent("Name"),
 		xpRewardLabel = new GUIContent("XP Reward"),
@@ -49,6 +49,7 @@ public static class QuestList {
 					EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i).FindPropertyRelative("id"), idLabel);
 					list.GetArrayElementAtIndex(i).FindPropertyRelative("id").intValue = QuestID(qm, i);
 					EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i).FindPropertyRelative("name"), nameLabel);
+					EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i).FindPropertyRelative("description"), descriptionLabel);
 					EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i).FindPropertyRelative("xpReward"), xpRewardLabel);
 					objectives = list.GetArrayElementAtIndex(i).FindPropertyRelative("objectives");
 					EditorGUILayout.BeginHorizontal();
@@ -78,17 +79,17 @@ public static class QuestList {
 			EditorGUI.indentLevel -= 1;
 		}
 
-		if (GUILayout.Button(saveFileButtonContent)) {
+		/*if (GUILayout.Button(saveFileButtonContent)) {
 			qm.Save();
 		}
 
 		if (GUILayout.Button(loadFileButtonContent)) {
 			qm.LoadOrCreate();
-		}
+		}*/
 
 		if (GUILayout.Button("PRINT")) {
 			foreach(Quest q in qm.Quests) {
-				Debug.Log(q.objectives.Count);
+				Debug.Log(q.Objectives.Count);
 			}
 		}
 	}
@@ -119,7 +120,7 @@ public static class QuestList {
 	}
 
 	private static int ObjectiveID(QuestManager qm, int questIndex, int objectiveIndex) {
-		if (qm.Quests.Count <= questIndex || qm.Quests[questIndex].objectives.Count <= objectiveIndex) return 0;
+		if (qm.Quests.Count <= questIndex || qm.Quests[questIndex].Objectives.Count <= objectiveIndex) return 0;
 		else return objectiveIndex;
 	}
 }

@@ -13,8 +13,9 @@ public class PCQuestLog : MonoBehaviour {
 
 	public static void StartQuest(int id) {
 		foreach (Quest quest in currentQuests) {
-			if (quest.id == id) {
+			if (quest.ID == id) {
 				currentQuests.Add(quest);
+				print("Quest " + quest.Name + " started"); //DEBUG
 				break;
 			}
 		}
@@ -22,7 +23,7 @@ public class PCQuestLog : MonoBehaviour {
 
 	public static void UpdateQuest(int id, int objective) {
 		foreach (Quest quest in currentQuests) {
-			if (quest.id == id) {
+			if (quest.ID == id) {
 				bool completed = quest.UpdateObjective(objective);
 				if (completed) {
 					EndQuest(quest);
@@ -34,7 +35,7 @@ public class PCQuestLog : MonoBehaviour {
 
 	public static void EndQuest(int id) {
 		foreach (Quest quest in currentQuests) {
-			if (quest.id == id) {
+			if (quest.ID == id) {
 				EndQuest(quest);
 				break;
 			}
@@ -47,7 +48,7 @@ public class PCQuestLog : MonoBehaviour {
 
 	public static bool QueryLog(int questID, int objective, bool completed) {
 		foreach (Quest q in currentQuests) {
-			if (q.id == questID) {
+			if (q.ID == questID) {
 				return (completed == q.CheckObjective(objective));
 			}
 		}
@@ -56,7 +57,7 @@ public class PCQuestLog : MonoBehaviour {
 
 	public static bool QueryLog(int questID, bool completed) {
 		foreach (Quest q in currentQuests) {
-			if (q.id == questID) {
+			if (q.ID == questID) {
 				return (completed == q.Completed);
 			}
 		}

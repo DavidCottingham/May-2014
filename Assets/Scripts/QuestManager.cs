@@ -20,7 +20,7 @@ public class QuestManager : MonoBehaviour {
 	}
 
 	void Start() {
-		LoadOrCreate();
+		//LoadOrCreate();
 	}
 
 	public void Save() {
