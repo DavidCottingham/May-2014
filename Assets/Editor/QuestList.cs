@@ -87,11 +87,11 @@ public static class QuestList {
 			qm.LoadOrCreate();
 		}*/
 
-		if (GUILayout.Button("PRINT")) {
+		/*if (GUILayout.Button("PRINT")) {
 			foreach(Quest q in qm.Quests) {
 				Debug.Log(q.Objectives.Count);
 			}
-		}
+		}*/
 	}
 
 	private static void ShowButtons(SerializedProperty list, int index, bool center) {

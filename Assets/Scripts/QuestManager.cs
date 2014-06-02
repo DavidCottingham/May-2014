@@ -10,13 +10,13 @@ public class QuestManager : MonoBehaviour {
 	private XmlSerializer serializer = new XmlSerializer(typeof(List<Quest>));
 	//non-running location?
 	private string path = "Assets/quests.xml";
-	private string playerQuestLogPath;
+	//private string playerQuestLogPath;
 
 	void Awake() {
 		//quests = new List<Quest>();
 		//serializer = new XmlSerializer(typeof(List<Quest>));
 		path = Path.Combine(Application.dataPath, "quests.xml");
-		playerQuestLogPath = Path.Combine(Application.persistentDataPath, "quests.xml");
+		//playerQuestLogPath = Path.Combine(Application.persistentDataPath, "quests.xml");
 	}
 
 	void Start() {
@@ -58,4 +58,13 @@ public class QuestManager : MonoBehaviour {
 			//Save();
 		}
 	}
+
+    public Quest GetQuest(int id) {
+        foreach (Quest q in quests) {
+            if (q.ID == id) {
+                return q;
+            }
+        }
+        return null;
+    }
 }

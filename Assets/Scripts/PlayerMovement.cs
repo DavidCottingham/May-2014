@@ -5,10 +5,6 @@ public class PlayerMovement : MonoBehaviour {
 
 	private float moveSpeed = 5f;
 
-	void Start() {
-		
-	}
-
 	void Update() {
 		if (Input.GetButton("Up")) {
 			gameObject.transform.Translate(Vector3.up * moveSpeed * Time.deltaTime);
@@ -22,5 +18,12 @@ public class PlayerMovement : MonoBehaviour {
 		if (Input.GetButton("Right")) {
 			gameObject.transform.Translate(-Vector3.left * moveSpeed * Time.deltaTime);
 		}
+
+        if (Input.GetButtonDown("Quest Log")) {
+            PCQuestLog.PrintQuestLog();
+        }
+        if (Input.GetButtonDown("Quit")) {
+            Application.Quit();
+        }
 	}
 }

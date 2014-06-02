@@ -17,7 +17,7 @@ public class Quest {
 	public int XPReward { get { return xpReward; } }
 	public bool Completed { get; private set; }
 	[SerializeField] private List<QuestObjective> objectives;
-	public List<QuestObjective> Objectives { get { return objectives; } }
+	public List<QuestObjective> Objectives { get { return objectives; } } //public read-only access is easiest way to interact. fairly safe since read-only. is there a better or more intuitive way though?
 
 	public Quest(string name, List<QuestObjective> objectives, int xpReward) {
 		this.id = questCount++;
@@ -43,10 +43,10 @@ public class Quest {
 				break;
 			}
 		}
-		return CheckCompleted();
+		return CheckQuestCompleted();
 	}
 
-	private bool CheckCompleted() {
+	private bool CheckQuestCompleted() {
 		foreach (QuestObjective qo in objectives) {
 			if (!qo.Completed) {
 				if (Completed) { Completed = false; }
@@ -57,7 +57,7 @@ public class Quest {
 		return Completed;
 	}
 
-	public bool CheckObjective(int id) {
+	public bool CheckObjectiveCompleted(int id) {
 		foreach (QuestObjective qo in objectives) {
 			if (qo.ID == id) {
 				return qo.Completed;
